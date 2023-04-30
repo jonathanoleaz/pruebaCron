@@ -4,34 +4,44 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import com.mx.notificaciones.models.dao.INotificacionDao;
 import com.mx.notificaciones.models.dao.ISolicitudDao;
 import com.mx.notificaciones.models.entity.Solicitud;
+import com.mx.notificaciones.utils.AppUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class NotificacionesScheduler {
+@Component
+public class SolicitudScheduler {
 	@Autowired
 	INotificacionDao iNotificacionDao;
 	
 	@Autowired
 	ISolicitudDao iSolicitudDao;
 	
-	private static final Logger logger = LogManager.getLogger(NotificacionesScheduler.class);
+	@Autowired
+	AppUtils appUtils;
+	
+	@Autowired
+	EntityManager entityManager;
+	
+	private static final Logger logger = LogManager.getLogger(SolicitudScheduler.class);
 
-	@Scheduled(cron = "0 0/2 0-23 * * MON-SUN")
+	@Scheduled(cron = "0 0/1 0 ? * *", zone = "America/Mexico_City")
 	   public void cronJobSch() {
-	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-	      Date now = new Date();
-	      String strDate = sdf.format(now);
-	      logger.debug("Java cron job expression:: " + strDate);
-	      List<Solicitud> solicitudes = iSolicitudDao.findAll();
+	      String uuid= appUtils.generaUuid();
+	      List<Solicitud> solicitudes = iSolicitudDao.findByCronHostname(uuid);
 	      for (Solicitud solicitud : solicitudes) {
 			logger.debug(solicitud.getTys());
+			solicitud.setCronHostname(uuid);
+			entityManager.persist(solicitud);
 		}
 	   }
 }

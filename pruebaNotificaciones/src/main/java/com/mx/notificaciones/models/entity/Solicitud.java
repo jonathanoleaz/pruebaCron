@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "")
+@Table(name = "solicitud")
 public class Solicitud implements Serializable {
 	
 	/**
