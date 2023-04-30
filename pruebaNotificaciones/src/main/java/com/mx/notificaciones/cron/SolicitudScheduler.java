@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,7 +35,8 @@ public class SolicitudScheduler {
 	
 	private static final Logger logger = LogManager.getLogger(SolicitudScheduler.class);
 
-	@Scheduled(cron = "0 0/1 0 ? * *", zone = "America/Mexico_City")
+	@Scheduled(cron = "0 * * ? * *", zone = "America/Mexico_City")
+	@Transactional
 	   public void cronJobSch() {
 	      String uuid= appUtils.generaUuid();
 	      List<Solicitud> solicitudes = iSolicitudDao.findByCronHostname(uuid);

@@ -33,7 +33,6 @@ public class Solicitud implements Serializable {
 	@Column(name = "tys")
 	private Integer tys;
 
-	@NotEmpty
 	@Column(name = "estado_notificacion")
 	private Integer estadoNotificacion;
 
