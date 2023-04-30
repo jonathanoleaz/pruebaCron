@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.mx.notificaciones.models.dao.INotificacionDao;
 import com.mx.notificaciones.models.dao.ISolicitudDao;
+import com.mx.notificaciones.models.entity.Notificacion;
 import com.mx.notificaciones.models.entity.Solicitud;
 import com.mx.notificaciones.utils.AppUtils;
 
@@ -44,6 +45,11 @@ public class SolicitudScheduler {
 			logger.debug(solicitud.getTys());
 			solicitud.setCronHostname(uuid);
 			entityManager.persist(solicitud);
+			
+			Notificacion notificacion=new Notificacion(new Date(), solicitud.getTys());
+			
+			entityManager.persist(notificacion);
+			
 		}
 	   }
 }

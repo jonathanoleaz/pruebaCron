@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import com.mx.notificaciones.models.entity.Solicitud;
 
 public interface ISolicitudDao extends JpaRepository<Solicitud, Long>{
-	@Query("select sol from Solicitud sol")
+	@Query("select sol from Solicitud sol where cronHostname<>:cronHostname")
     public List<Solicitud> findByCronHostname(@Param("cronHostname") String cronHostname);
 }

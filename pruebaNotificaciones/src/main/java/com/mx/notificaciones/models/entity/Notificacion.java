@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,15 +35,15 @@ public class Notificacion implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quoteSeq")
+    @SequenceGenerator(name = "quoteSeq", sequenceName = "NOTIFICACIONES_SEQ ", allocationSize = 1)
 	@Column(name = "id_notificacion")
 	private Integer id;
 
-	@NotEmpty
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha_creacion")
 	private Date fechaCreacion;
 
-	@NotEmpty
 	@Column(name = "fk_solicitud")
 	private Integer fkSolicitud;
 
@@ -67,6 +68,12 @@ public class Notificacion implements Serializable{
 	}
 
 	public void setFkSolicitud(Integer fkSolicitud) {
+		this.fkSolicitud = fkSolicitud;
+	}
+
+	public Notificacion(@NotEmpty Date fechaCreacion, @NotEmpty Integer fkSolicitud) {
+		super();
+		this.fechaCreacion = fechaCreacion;
 		this.fkSolicitud = fkSolicitud;
 	}
 	
