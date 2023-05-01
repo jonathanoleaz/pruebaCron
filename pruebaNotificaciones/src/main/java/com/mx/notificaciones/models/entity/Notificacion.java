@@ -46,6 +46,8 @@ public class Notificacion implements Serializable{
 
 	@Column(name = "fk_solicitud")
 	private Integer fkSolicitud;
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -76,8 +78,4 @@ public class Notificacion implements Serializable{
 		this.fechaCreacion = fechaCreacion;
 		this.fkSolicitud = fkSolicitud;
 	}
-	
-
-
-	
 }

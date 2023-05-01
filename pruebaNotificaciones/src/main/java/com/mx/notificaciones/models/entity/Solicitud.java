@@ -41,6 +41,9 @@ public class Solicitud implements Serializable {
 
 	@Column(name = "column1")
 	private String column1;
+	
+	@Column(name = "ultima_secuencia")
+	private Integer ultimaSecuencia;
 
 	public Integer getTys() {
 		return tys;
@@ -74,5 +77,11 @@ public class Solicitud implements Serializable {
 		this.column1 = column1;
 	}
 	
+	public Integer getUltimaSecuencia() {
+		return ultimaSecuencia;
+	}
 
+	public void setUltimaSecuencia(Integer ultimaSecuencia) {
+		this.ultimaSecuencia = ultimaSecuencia;
+	}
 }
